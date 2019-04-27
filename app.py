@@ -14,9 +14,8 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=0)
 socketio = SocketIO(app)
 
 
-@app.route('/')
+@app.route('/wechat')
 def hello_world():
-    session['test'] = 'test2'
     return render_template('index.html')
 
 
@@ -44,7 +43,7 @@ class WechatNamespace(Namespace):
         print("websocket 断开连接..")
 
     def on_login(self):
-        self._wechat = WechatUtils(self.get_image, cache_path=True)
+        self._wechat = WechatUtils(self.get_image, cache_path=False)
         self.emit("login_status", "success")
 
     def on_check_friends(self):
@@ -63,7 +62,6 @@ class WechatNamespace(Namespace):
 
     def on_show_data(self):
         data = self._wechat.stats()
-        print(data)
         self.emit("show_data", data)
 
     def on_start_robot_chat(self):
