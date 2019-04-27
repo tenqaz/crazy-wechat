@@ -4,15 +4,21 @@ from wechatUtils import WechatUtils
 
 from crazy_wechat.settings import image_path
 import os
-
+from datetime import timedelta
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret~'
+# 将缓存时间设置为1秒
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=0)
+
 socketio = SocketIO(app)
+
 
 @app.route('/')
 def hello_world():
+    session['test'] = 'test2'
     return render_template('index.html')
+
 
 # @app.route("/show_data")
 # def show_data():
@@ -60,10 +66,17 @@ class WechatNamespace(Namespace):
         print(data)
         self.emit("show_data", data)
 
+    def on_start_robot_chat(self):
+        self._wechat.tuling_group()
+
+    def on_stop_robot_chat(self):
+        self._wechat.tuling_group_close()
+
     def on_message(self, data):
         print(f"reciver message: {data}")
+
 
 socketio.on_namespace(WechatNamespace("/wechat"))
 
 if __name__ == '__main__':
-    socketio.run(app, port=8080)
+    socketio.run(app, port=8080, debug=True)

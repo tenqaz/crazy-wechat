@@ -41,7 +41,6 @@ class WechatUtils:
                 print(f"{msg.sender.name} 不是你的好友")
                 self.black_friends.append(msg.sender.name)
 
-
     def check_friend(self, friend):
         """
         检查该微信是否为好友
@@ -115,6 +114,7 @@ class WechatUtils:
         """
         return self._bot.friends().stats()
 
+
 class Test():
 
     def get_image(self, uuid, status, qrcode):
@@ -124,20 +124,20 @@ class Test():
     def __init__(self):
         self.wechat = WechatUtils(self.get_image)
 
+
 if __name__ == '__main__':
     # t = Test()
 
     wechat = WechatUtils(qr_callback=False, cache_path=True)
-
+    # print(wechat.stats())
 
     # wechat.check_friends_able()
 
     # friend = wechat.get_all_friends().search("robot")[0]
     # wechat.tuling_friend(friend)
     # wechat.tuling_friend_close()
-    # wechat.tuling_group()
+    wechat.tuling_group()
 
+    # print(wechat.stats())
 
-    print(wechat.stats())
-
-    # wechat._bot.join()
+    wechat._bot.join()
