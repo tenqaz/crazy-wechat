@@ -66,7 +66,7 @@ class WechatUtils:
         friend = self._bot.friends().search("robot")[0]
         self.check_friend(friend)
 
-    def tuling_friend(self, friend):
+    def tuling_friend(self, friend=None):
         """
         使用图灵和朋友聊天
         :param friend:

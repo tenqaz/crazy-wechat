@@ -8,15 +8,15 @@ from datetime import timedelta
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret~'
-# 将缓存时间设置为1秒
+# 将缓存时间设置为0秒
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=0)
 
 socketio = SocketIO(app)
 
 
-@app.route('/wechat')
+@app.route('/')
 def hello_world():
-    return render_template('index.html')
+    return "hello"
 
 
 # @app.route("/show_data")
@@ -55,11 +55,6 @@ class WechatNamespace(Namespace):
             self._wechat.check_friend(friend)
             self.emit("check_friends_num")
 
-        print(self._wechat.nofriends)
-        print(self._wechat.black_friends)
-
-        self.emit("check_friends", {'nofriends': self._wechat.nofriends, 'black_friends': self._wechat.black_friends})
-
     def on_show_data(self):
         data = self._wechat.stats()
         self.emit("show_data", data)
@@ -70,6 +65,12 @@ class WechatNamespace(Namespace):
     def on_stop_robot_chat(self):
         self._wechat.tuling_group_close()
 
+    def on_start_robot_chat_friend(self):
+        self._wechat.tuling_friend()
+
+    def on_stop_robot_chat_friend(self):
+        self._wechat.tuling_friend_close()
+
     def on_message(self, data):
         print(f"reciver message: {data}")
 
@@ -77,4 +78,4 @@ class WechatNamespace(Namespace):
 socketio.on_namespace(WechatNamespace("/wechat"))
 
 if __name__ == '__main__':
-    socketio.run(app, port=8080, debug=True)
+    socketio.run(app, port=6000, debug=True)
