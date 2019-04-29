@@ -8,8 +8,6 @@ from datetime import timedelta
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret~'
-# 将缓存时间设置为0秒
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=0)
 
 socketio = SocketIO(app)
 
@@ -78,4 +76,5 @@ class WechatNamespace(Namespace):
 socketio.on_namespace(WechatNamespace("/wechat"))
 
 if __name__ == '__main__':
-    socketio.run(app, port=6000, debug=True)
+    # 在emit到前端数据时,会将数据缓存，而没有发送过去，从而阻塞。设置debug=True后可以解决，暂未知原因。
+    socketio.run(app, debug=True)
