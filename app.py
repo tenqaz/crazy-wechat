@@ -14,7 +14,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=0)
 socketio = SocketIO(app)
 
 
-@app.route('/')
+@app.route('/wechat/index')
 def hello_world():
     return "hello"
 
