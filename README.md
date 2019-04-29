@@ -17,6 +17,10 @@ wechat的一些小功能
 对方聊天的消息进行情感分析，判断是高兴的还是难过的。
 
 
+### 测试
+
+[该项目测试网址](http://118.24.242.28/crazy-wechat/web/index.html)
+
 ### 技术
 
 使用`flask`作为后端,`flask_socketio`和前端的`socket.io.min.js`完成`websocket`功能。
@@ -28,3 +32,10 @@ wechat的一些小功能
 ### 博客
 该项目一些技术要点的笔记博客。
 
+[Flask使用flask_socketio实现websocket](https://blog.csdn.net/qq_22918243/article/details/89449850)
+
+[浏览器缓存图片](https://blog.csdn.net/qq_22918243/article/details/89642345)
+
+
+### 最后
+觉得好的希望得到各位大佬的star。觉得不好的请给点意见。谢谢。
